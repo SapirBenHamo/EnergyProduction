@@ -1,6 +1,7 @@
 --- Worldwide ---
 
 -- Q1
+-- Electricity generation over time 
 
 SELECT *
 FROM 
@@ -13,6 +14,7 @@ SUM(EG) FOR [YEAR] IN ([2000],[2005],[2010],[2015],[2018])
 
 
 -- Q2
+-- Electricity production by source of energy in 2000 and 2018
 
 SELECT 
     YEAR,
@@ -44,6 +46,7 @@ GROUP BY YEAR
 
 
 -- Q3
+-- Electricity generation by source type (renewable vs. conventional) between 1995 and 2018
 
 SELECT YEAR,
        (ROUND(SUM(renewable_electricity),2)    / (LAG(SUM(renewable_electricity),1)    OVER(ORDER BY YEAR))-1) * 100 AS '%_of_renewable_increase',
@@ -57,6 +60,7 @@ ORDER BY YEAR
 --- Continents ---
 
 -- Q4
+-- Electricity generation by continents between 2000 and 2018
 
 SELECT * 
 FROM 
@@ -70,6 +74,7 @@ SUM(electricity_generation) FOR [YEAR] IN ([2000],[2005],[2010],[2015],[2018])
 
 
 -- Q5
+-- Electricity generation by source type in 2000 and 2018
 
 SELECT Continent,
        ROUND(SUM(renewable_electricity)    / (SUM(renewable_electricity) + SUM(conventional_electricity)),2) AS 'Renewable',
@@ -89,6 +94,7 @@ ORDER BY Renewable DESC
 
 
 -- Q6 (by PBI)
+-- Annually kWh per capita in 2018
 
 WITH Continents AS 
 (
@@ -113,6 +119,7 @@ SUM(energy_per_capita) FOR [YEAR] IN ([2000],[2005],[2010],[2015],[2018])
 --- Countries ---
 
 -- Q8
+-- GDP per capita in 2000 and 2018
 
 WITH Countries AS 
 (
@@ -149,6 +156,7 @@ as pvt;
 
 
 -- Q9
+-- Electricity generation by source type and country in 2000 and 2018
 
 SELECT country,
        ROUND(SUM(renewable_electricity)/(SUM(renewable_electricity)    + SUM(conventional_electricity)),2) AS 'Renewable',
@@ -166,6 +174,7 @@ GROUP BY country
 
 
 -- Q10
+-- Israel electriciy generation by source of energy in 2018
 
 SELECT country,
        ROUND(SUM(gas_electricity)/SUM(electricity_generation),3)     * 100 AS 'gas_share',
